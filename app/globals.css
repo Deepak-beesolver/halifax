@@ -1,26 +1,104 @@
 @import "tailwindcss";
 
+@theme {
+  /* ---- Brand palette (derived from the Halifax logo) ---- */
+  /* Greens */
+  --color-olive: #43472b;        /* primary brand green */
+  --color-forest: #2f341d;       /* dark / military forest */
+  --color-tactical: #596038;     /* secondary tactical olive */
+
+  /* Copper accents */
+  --color-copper: #bc773a;       /* primary accent */
+  --color-copper-dark: #9c5e28;  /* hover accent */
+  --color-sand: #d49a62;         /* light accent / sand gold */
+
+  /* Neutrals */
+  --color-warm: #f8f7f5;         /* page background */
+  --color-stone: #f1efeb;        /* section background */
+  --color-charcoal: #2a2a2a;     /* body text */
+  --color-slate: #6b6b6b;        /* muted text */
+  --color-line: #d9d4cc;         /* borders */
+
+  /* Fonts */
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-serif: var(--font-cormorant), Georgia, "Times New Roman", serif;
+
+  /* Radii */
+  --radius-card: 12px;
+
+  /* Container */
+  --breakpoint-3xl: 96rem;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f8f7f5;
+  --foreground: #2a2a2a;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
+  margin: 0;
+  min-height: 100vh;
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: rgba(188, 119, 58, 0.22);
+  color: #2f341d;
+}
+
+/* Centered page container */
+@utility container-x {
+  width: 100%;
+  margin-inline: auto;
+  max-width: 80rem; /* 1280px */
+  padding-inline: 1.25rem;
+  @media (min-width: 768px) {
+    padding-inline: 2rem;
+  }
+}
+
+/* Copper gradient for primary accents / underlines */
+@utility bg-copper-gradient {
+  background-image: linear-gradient(120deg, #d49a62 0%, #bc773a 55%, #9c5e28 100%);
+}
+
+@utility text-copper-gradient {
+  background-image: linear-gradient(120deg, #d49a62 0%, #bc773a 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* Faint diagonal texture for dark olive sections */
+@utility bg-diagonal-lines {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(255, 255, 255, 0.035) 0px,
+    rgba(255, 255, 255, 0.035) 1px,
+    transparent 1px,
+    transparent 12px
+  );
+}
+
+/* Subtle entrance animation used across sections */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@utility animate-rise {
+  animation: rise 0.6s ease-out both;
 }
